@@ -1,1 +1,52 @@
-<p>modal works!</p>
+<div class="cuerpo">
+    <div id="formulario">
+        <div id="encabezado">
+            <span>{{titulo}}</span>
+        </div>
+        <form [formGroup]="formReserva" novalidate="novalidate">
+
+            <!-- CAMPO PERSONA -->
+            <mat-form-field appearance="standard">
+                <mat-icon matPrefix>
+                    text_fields</mat-icon>
+                <mat-label>Nombre y Apellido</mat-label>
+                <input matInput formControlName="persona" type="text">
+                <mat-error>
+                    Ingresa un nombre.
+                </mat-error>
+            </mat-form-field>
+
+            <!-- CAMPO DNI  -->
+            <mat-form-field appearance="standard">
+                <mat-icon matPrefix>
+                    perm_identity</mat-icon>
+                <mat-label>DNI</mat-label>
+                <input matInput formControlName="dni" type="number">
+                <mat-error>
+                    Ingresa un DNI válido.
+                </mat-error>
+            </mat-form-field>
+
+
+            <!-- CAMPO FECHA  -->
+            <mat-form-field appearance="standard">
+                <mat-icon matPrefix>
+                    today</mat-icon>
+                <mat-label>Fecha</mat-label>
+                <input matInput formControlName="fecha" type="datetime-local" [min]=fechaHoyParseada #dateSel>
+                <mat-error>
+                    Por favor, revisa la fecha ingresada.
+                </mat-error>
+            </mat-form-field>
+
+
+            <div class="comandos">
+                <button (click)="verDatos()">VER FORMULARIO</button>
+                <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+                <button *ngIf="this.formReserva.invalid" mat-raised-button disabled="true">Guardar</button>
+                <button *ngIf="this.formReserva.valid" mat-raised-button (click)="guardarCambios()">Guardar</button>
+            </div>
+        </form>
+        <br>
+    </div>
+</div>

@@ -1,1 +1,133 @@
-<p>tabla works!</p>
+<div class="preTabla">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Seleccionar Sala</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let sala of dataSource.data" [value]="sala.id" (click)="verReservas(sala.id)" (click)="setSala(sala)">
+                {{sala.nombreDeSala}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button *ngIf="!agregarSala ; else mostrarInput" mat-raised-button class="btnStyle" color="primary" (click)="agregarSala = !agregarSala" (click)="
+    this.salaSeleccionada.id=null;">Agregar Sala</button>
+
+    <ng-template #mostrarInput>
+        <div class="campoNuevaSala">
+            <div class="campoNuevaSala" style="display: flex;">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Ingresar nombre de sala." #inputSala>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button class="btnStyle btnMedio" color="primary" style="height: auto;" (click)="crearSala(inputSala.value)"><mat-icon matPrefix>
+                        add_circle</mat-icon></button>
+                </div>
+                <div>
+                    <button mat-raised-button class="btnStyle" style="height: auto;" color="warn" (click)="agregarSala = !agregarSala"><mat-icon matPrefix>
+                    close</mat-icon></button>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </ng-template>
+</div>
+
+<div *ngIf="salaSeleccionada.id" class="actions">
+
+    <button mat-raised-button class="btnStyle" color="primary" (click)="openModal(this.salaSeleccionada, resDef, posDef)">Agregar Reserva</button>
+
+    <button *ngIf="!renameSala ; else rename" mat-raised-button class="btnStyle" color="primary" (click)="renameSala = !renameSala">Modificar nombre</button>
+
+    <ng-template #rename>
+        <div class="campoNuevaSala">
+
+            <div style="display: flex;">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Nuevo nombre</mat-label>
+                    <input matInput placeholder="Renombre la sala." #inputRename>
+                </mat-form-field>
+
+                <div>
+                    <button mat-raised-button class="btnStyle btnMedio" color="primary" style="height: auto;" (click)="renombrarSala(inputRename.value)"><mat-icon matPrefix>
+                        add_circle</mat-icon></button>
+                </div>
+                <div>
+                    <button mat-raised-button class="btnStyle" color="warn" style="height: auto;" (click)="renameSala = !renameSala"><mat-icon matPrefix>
+                        close</mat-icon></button>
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
+
+
+    <button mat-raised-button class="btnStyle" color="warn" (click)="borrarSala(salaSeleccionada.id)"> Eliminar {{salaSeleccionada.nombreDeSala}}</button>
+
+    <div class="buscador">
+        <input placeholder="Filtrar elementos" (keyup)="filtrar($event.target.value)" #termino>
+        <button mat-raised-button color="primary" (click)="filtrar(termino.value)"> <mat-icon matPrefix>
+            search</mat-icon> </button>
+    </div>
+
+</div>
+<div class="cuerpoTabla">
+    <table *ngIf="salaSeleccionada.id ;else sinDatos" mat-table [dataSource]="dataSource2" matSort #sort class="mat-elevation-z8">
+        <div class="filas">
+
+            <!-- Columna Fecha -->
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                <td mat-cell *matCellDef="let element "> {{ element.fecha | date:'mediumDate' }}</td>
+            </ng-container>
+
+
+            <!-- Columna Hora -->
+            <ng-container matColumnDef="horaReserva">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Horario </th>
+                <td mat-cell *matCellDef="let element"> {{element.fecha | date:'shortTime'}} </td>
+            </ng-container>
+
+
+            <!-- Columna NyA -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre y apellido </th>
+                <td mat-cell *matCellDef="let element"> {{element.persona}} </td>
+            </ng-container>
+
+
+
+            <!-- Columna DNI -->
+            <ng-container matColumnDef="dni">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> DNI </th>
+                <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
+            </ng-container>
+            <!-- Columna Acciones -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index" style="display: flex; justify-content: center;">
+                    <div>
+                        <button mat-mini-fab color="secondary" (click)="openModal(this.salaSeleccionada,element,i)">
+                            <mat-icon [inline]="true">create</mat-icon>
+                        </button>
+                        <button mat-mini-fab class="eliminar" color="warn" (click)="borrarReserva(i)">
+                            <mat-icon [inline]="true">delete_forever</mat-icon>
+                        </button>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns.concat('actions')"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns.concat('actions');"></tr>
+        </div>
+    </table>
+</div>
+
+<ng-template #sinDatos class="centrar" style="text-align: center;">
+    <div style="margin-top: 5%;">
+        <h1>Por favor, selecciona una sala para ver las reservas</h1>
+    </div>
+</ng-template>

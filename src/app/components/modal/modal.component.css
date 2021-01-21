@@ -1,0 +1,37 @@
+.contenedor {
+    text-align: center;
+}
+
+#formulario #encabezado {
+    padding-left: 2em;
+    text-align: left;
+    background-color: #673ab7;
+    line-height: 3em;
+    color: white;
+    font-weight: bold;
+}
+
+#formulario {
+    width: 100%;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+#formulario form {
+    overflow: hidden;
+}
+
+#formulario mat-form-field,
+.campo {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0.5%;
+    width: 32.33%;
+}
+
+.comandos {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
