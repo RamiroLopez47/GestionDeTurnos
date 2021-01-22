@@ -41,10 +41,9 @@
 
 
             <div class="comandos">
-                <button (click)="verDatos()">VER FORMULARIO</button>
-                <button mat-raised-button (click)="onNoClick()">Cancelar</button>
-                <button *ngIf="this.formReserva.invalid" mat-raised-button disabled="true">Guardar</button>
-                <button *ngIf="this.formReserva.valid" mat-raised-button (click)="guardarCambios()">Guardar</button>
+                <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+                <button *ngIf="this.formReserva.invalid" color="primary" mat-raised-button disabled="true">Guardar</button>
+                <button *ngIf="this.formReserva.valid" color="primary" mat-raised-button (click)="guardarCambios()">Guardar</button>
             </div>
         </form>
         <br>

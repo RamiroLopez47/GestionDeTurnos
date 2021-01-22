@@ -8,7 +8,6 @@ import { ModalComponent } from './components/modal/modal.component';
 import { TablaComponent } from './components/tabla/tabla.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { GestionServiceService } from './services/gestion-service.service';
 
 
@@ -23,7 +22,6 @@ import { ModulesModule } from './modules/modules.module';
     ModalComponent,
     TablaComponent,
     ToolbarComponent,
-    FooterComponent,
 
   ],
   imports: [

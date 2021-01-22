@@ -27,10 +27,9 @@ export class GestionServiceService {
   }
   
 
-  getOne(id: number): Observable<ISala> {
-    
-     return this.http.get<ISala>(this.miUrl + '/' + id);
-}
+  getOne(id: number): Observable<ISala> {   
+      return this.http.get<ISala>(this.miUrl + '/' + id);     
+  }
 
   delete(id: number): Observable<any> {
     try {

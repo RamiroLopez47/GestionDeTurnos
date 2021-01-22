@@ -66,9 +66,7 @@ export class TablaComponent implements OnInit {
     //Carga las salas
     this.servicios.getAll(0,1000).subscribe(data => { 
       this.dataSource.data = data;
-      console.log(this.dataSource);  
-    }
-    );
+    });
   } 
 
   //Trae las reservas con status verdadero
@@ -82,12 +80,12 @@ export class TablaComponent implements OnInit {
 
   //Selecciona una sala para operar con ella
 setSala(sala: ISala){
+  console.log("SalaSeteada",sala);
   this.agregarSala = false;
   this.salaSeleccionada.status = sala.status;
   this.salaSeleccionada.id = sala.id;
   this.salaSeleccionada.nombreDeSala = sala.nombreDeSala;
   this.salaSeleccionada.reservas = sala.reservas;
-  console.log("Sala seteada",this.salaSeleccionada);
 }
 
 
@@ -100,12 +98,13 @@ openModal(sala: ISala, reserva: IReserva, pos:number) {
   });
   //Acciones al cerrar el modal
   dialogRef.afterClosed().subscribe(() => {
-
-    console.log("Saliendo res",this.salaSeleccionada.reservas);
-   
-
-    console.log("Saliendo post res",this.salaSeleccionada.reservas);
     
+    this.dataSource.data.map(res=>{
+      if(res.id === this.salaSeleccionada.id){
+        this.setSala(res);
+      }
+    })
+
   });
 }
 
@@ -173,7 +172,6 @@ public filtrar(valorFiltro: string) {
   valorFiltro = valorFiltro.trim(); // Remueve espacios en blanco
   valorFiltro = valorFiltro.toLowerCase(); // Convierte a minusculas
   this.dataSource2.filter = valorFiltro;
-  console.log("buscando...")
 }
 
   }

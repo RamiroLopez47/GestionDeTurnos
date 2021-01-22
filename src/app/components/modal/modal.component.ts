@@ -42,17 +42,12 @@ export class ModalComponent implements OnInit {
                   if (this.resDef.id >=0){
                     this.titulo = "Editar Reserva"
                   }
-                  console.log(this.salaDef,"salaDef con data");
                 }
-                console.log(this.salaDef,"salaDEF");
-                console.log(this.salaDef.reservas,"this.salaDef.reservas");
-                
                 this.crearFormulario();
 
               }
 
   ngOnInit(): void {    
-console.log("NUMBER mindate",Number(this.minDate));
   }
 
   crearFormulario(): void {
@@ -66,18 +61,12 @@ console.log("NUMBER mindate",Number(this.minDate));
     //Comprueba si se trata de adición o de actualización
 
     public guardarCambios() {
-
       if(this.formReserva.valid){
         if (this.resDef.id >= 0) {
-
           this.actualizar();
-
         } else {
-
           this.crearNueva();
-
-        }
-        this.dialogRef.close();
+        }        
       }else{
         alert("Oops! Algo salió mal ")
       }
@@ -85,22 +74,17 @@ console.log("NUMBER mindate",Number(this.minDate));
 
     public crearNueva(){
       this.salaDef.reservas.push(this.formReserva.value);
-      this.servicios.put(this.salaDef.id,this.salaDef).subscribe(()=>{
-        console.log("Creando Nueva");
+      this.servicios.put(this.salaDef.id,this.salaDef).subscribe((res)=>{
+        this.dialogRef.close();
       })
 
     }
 
     public actualizar(){
-      this.salaDef.reservas.splice(this.indRes,1);
-      this.salaDef.reservas.push(this.formReserva.value);
-      this.servicios.put(this.salaDef.id,this.salaDef).subscribe(()=>{
-        console.log("Actualizando");
+      this.salaDef.reservas.splice(this.indRes,1,this.formReserva.value);
+      this.servicios.put(this.salaDef.id,this.salaDef).subscribe((res)=>{
+        this.dialogRef.close();
       })
-    }
-
-    verDatos(){
-      console.log("data -->", this.formReserva.value);
     }
 
 
